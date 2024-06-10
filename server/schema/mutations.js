@@ -18,14 +18,24 @@ const mutation = new GraphQLObjectType({
         return new Song({ title }).save();
       }
     },
+    editSong: {
+      type: SongType,
+      args: {
+        id: { type: GraphQLID },
+        title: { type: GraphQLString }
+      },
+      resolve: async(parentValue, { id, title }) => {
+        return await Song.findByIdAndUpdate(id, { title }, { new: true });
+      }
+    },
     addLyricToSong: {
       type: SongType,
       args: {
         content: { type: GraphQLString },
         songId: { type: GraphQLID }
       },
-      resolve(parentValue, { content, songId }) {
-        return Song.addLyric(songId, content);
+      resolve: async (parentValue, { content, songId }) => {
+        return await Song.addLyric(songId, content);
       }
     },
     likeLyric: {
@@ -38,8 +48,8 @@ const mutation = new GraphQLObjectType({
     deleteSong: {
       type: SongType,
       args: { id: { type: GraphQLID } },
-      resolve(parentValue, { id }) {
-        return Song.findByIdAndRemove(id);
+      resolve: async (parentValue, { id }) => {
+        return await Song.findByIdAndDelete(id);
       }
     }
   }

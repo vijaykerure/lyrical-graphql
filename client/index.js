@@ -1,19 +1,37 @@
+import './styles/styles.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ApolloClient from 'apollo-client';
-import { ApolloProvider } from 'react-apollo';
+import * as ReactDOM from 'react-dom/client';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
-const client = new ApolloClient({});
+import App from './components/App';
+import Songs from './components/Songs';
+import AddSong from './components/AddSong';
+import SongDetails from './components/SongDetails';
+import SongEdit from './components/SongEdit';
 
-const Root = () => {
-  return (
+const client = new ApolloClient({
+  uri: 'https://didactic-waddle-j45qx4pq6rq35446-4000.app.github.dev',
+  cache: new InMemoryCache(),
+  credentials: 'include',
+});
+
+// Supported in React 18+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  <React.StrictMode>
     <ApolloProvider client={client}>
-      <div>Lyrical</div>
+      <Router basename='/'>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<Songs />} />
+            <Route path="/songs/new" element={<AddSong />} />
+            <Route path="/songs/edit/:id" element={<SongEdit />} />
+            <Route path="/songs/:id" element={<SongDetails />} />
+          </Route>
+        </Routes>
+      </Router>
     </ApolloProvider>
-  );
-};
-
-ReactDOM.render(
-  <Root />,
-  document.querySelector('#root')
+  </React.StrictMode>,
 );
