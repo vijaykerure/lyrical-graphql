@@ -36,7 +36,7 @@ function CreateLyrics({ songId }) {
                 }}>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input  type="text" id="lyricsContent" className="materialize-textarea" ref={lyricsContent} />
+                            <input type="text" id="lyricsContent" className="materialize-textarea" ref={lyricsContent} />
                             <label htmlFor="lyricsContent">Lyrics Content</label>
                         </div>
                     </div>

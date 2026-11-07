@@ -9,14 +9,16 @@ const LIKE_LYRICS = gql`
         }
 }`;
 
-function renderItems(lyrics, onLike) {
+function renderItems(lyrics, onLike, lLoading) {
     return lyrics.map(({ id, content, likes }) => {
         return <li key={id} className="collection-item">{content}
-            <div className="action-box">
-                {likes}
+            <div className="like-box">
                 <i className="material-icons"
-                    onClick={() => onLike}
+                    style={{ cursor: lLoading ? 'not-allowed' : 'pointer' }}
+                    onClick={() => !lLoading && onLike(id)}
                 >thumb_up</i>
+                
+                <p>{likes}</p>
             </div>
             
         </li>;
@@ -24,15 +26,15 @@ function renderItems(lyrics, onLike) {
 }
 
 const Lyrics = ({ lyrics }) => {
-    const [likeLyric] = useMutation(LIKE_LYRICS);
+    const [likeLyric, { loading }] = useMutation(LIKE_LYRICS);
     function onLike (lyricId) {
-        likeLyric({variabiles: { likeLyricId: lyricId }})
+        likeLyric({variables: { likeLyricId: lyricId }})
     }
     return (
         <div>
             <ul className="collection with-header">
                 <li className="collection-header"><h6>Lyrics</h6></li>
-                {lyrics && lyrics.length ? renderItems(lyrics, onLike) : <li className="collection-item">No lyrics found</li>}
+                {lyrics && lyrics.length ? renderItems(lyrics, onLike, loading) : <li className="collection-item">No lyrics found</li>}
             </ul>
         </div>
     )

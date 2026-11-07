@@ -11,7 +11,7 @@ import SongDetails from './components/SongDetails';
 import SongEdit from './components/SongEdit';
 
 const client = new ApolloClient({
-  uri: 'https://didactic-waddle-j45qx4pq6rq35446-4000.app.github.dev',
+  uri: 'http://localhost:4000' || 'https://didactic-waddle-j45qx4pq6rq35446-4000.app.github.dev',
   cache: new InMemoryCache(),
   credentials: 'include',
 });

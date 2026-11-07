@@ -8,6 +8,7 @@ const queryGetSongDetails = gql`
       lyrics {
         id
         content
+        likes
       }
     }
   }

@@ -34,7 +34,7 @@ const server = new ApolloServer({
 });
 
 app.use(cors({
-  origin: 'https://didactic-waddle-j45qx4pq6rq35446-9000.app.github.dev',
+  origin: 'http://localhost:9000' || 'https://didactic-waddle-j45qx4pq6rq35446-9000.app.github.dev',
   credentials: true,
 }));
 
